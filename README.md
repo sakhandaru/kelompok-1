@@ -144,6 +144,9 @@ Catatan:
 ## Catatan
 
 - Jangan edit `board.json` saat aplikasi sedang terbuka (bisa tertimpa).
+- Keamanan server: hanya mendengarkan `127.0.0.1` (tidak terlihat dari
+  jaringan Wi-Fi), menolak header `Host` & `Origin` asing (anti DNS
+  rebinding / CSRF), upload dibatasi 300 MB dan hanya ekstensi audio.
 - Untuk pengaturan output yang paling andal saat pentas, pakai pengaturan
   audio macOS: **System Settings → Sound → Output**.
 - Port bisa diganti: `PORT=3000 node serve.js`

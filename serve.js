@@ -141,6 +141,18 @@ const server = http.createServer((req, res) => {
   const url = new URL(req.url, "http://localhost");
   const route = url.pathname;
 
+  /* --- penjaga keamanan --- */
+  // 1) hanya mesin sendiri yang boleh akses (Host harus localhost/127.0.0.1)
+  const host = req.headers.host || "";
+  const localHosts = new Set([`localhost:${PORT}`, `127.0.0.1:${PORT}`, `[::1]:${PORT}`]);
+  if (!localHosts.has(host)) {
+    return json(res, 403, { ok: false, error: "Host tidak diizinkan (hanya untuk mesin lokal)" });
+  }
+  // 2) tolak permintaan tulis dari origin lain (mencegah CSRF dari situs jahat)
+  if (req.method !== "GET" && req.headers.origin && req.headers.origin !== `http://${host}`) {
+    return json(res, 403, { ok: false, error: "Origin ditolak" });
+  }
+
   if (route === "/api/files" && req.method === "GET") {
     return json(res, 200, { files: listSounds() });
   }
@@ -158,7 +170,10 @@ const server = http.createServer((req, res) => {
     req.on("end", () => {
       try {
         const board = sanitizeBoard(JSON.parse(body));
-        fs.writeFileSync(BOARD_FILE, JSON.stringify(board, null, 2) + "\n");
+        // tulis atomik (tmp lalu rename) supaya board.json tidak korup bila crash di tengah
+        const tmp = BOARD_FILE + ".tmp";
+        fs.writeFileSync(tmp, JSON.stringify(board, null, 2) + "\n");
+        fs.renameSync(tmp, BOARD_FILE);
         console.log("[simpan] board.json diperbarui");
         json(res, 200, { ok: true });
       } catch (e) {
@@ -178,7 +193,11 @@ const server = http.createServer((req, res) => {
     if (!AUDIO_EXT.has(ext.toLowerCase())) {
       return json(res, 415, { ok: false, error: "format tidak didukung: " + (ext || "(tanpa ekstensi)") });
     }
-    const targetDir = path.join(SOUNDS_DIR, sub);
+    // folder tujuan wajib di dalam sounds/ (tolak "..", dst.)
+    const targetDir = path.resolve(path.join(SOUNDS_DIR, sub));
+    if (targetDir !== SOUNDS_DIR && !targetDir.startsWith(SOUNDS_DIR + path.sep)) {
+      return json(res, 400, { ok: false, error: "Folder tujuan tidak valid" });
+    }
     try { fs.mkdirSync(targetDir, { recursive: true }); } catch (e) {
       return json(res, 500, { ok: false, error: e.message });
     }
@@ -187,22 +206,37 @@ const server = http.createServer((req, res) => {
     const base = path.basename(safeName, ext);
     for (let i = 1; fs.existsSync(final); i++) final = path.join(targetDir, `${base}-${i}${ext}`);
 
+    // batasi ukuran upload supaya disk tidak habis (300 MB)
+    const MAX_UPLOAD = 300 * 1024 * 1024;
+    let received = 0, aborted = false;
+    req.on("data", (c) => {
+      received += c.length;
+      if (received > MAX_UPLOAD && !aborted) {
+        aborted = true;
+        try { fs.unlinkSync(final); } catch {}
+        json(res, 413, { ok: false, error: "File terlalu besar (maks 300 MB)" });
+        req.destroy();
+      }
+    });
+
     const ws = fs.createWriteStream(final);
     req.pipe(ws);
     ws.on("close", () => {
+      if (aborted) return;
       const rel = path.relative(SOUNDS_DIR, final).split(path.sep).join("/");
       console.log("[upload] sounds/" + rel);
       writeManifest(); // daftar file di manifest ikut ter-update
       json(res, 200, { ok: true, path: rel });
     });
-    ws.on("error", (e) => json(res, 500, { ok: false, error: e.message }));
+    ws.on("error", (e) => { if (!aborted) json(res, 500, { ok: false, error: e.message }); });
     return;
   }
 
-  /* file statis */
+  /* file statis — wajib tetap di dalam folder project */
   let rel = decodeURIComponent(route === "/" ? "/index.html" : route);
-  const filePath = path.normalize(path.join(ROOT, rel));
-  if (!filePath.startsWith(ROOT)) {
+  const filePath = path.resolve(path.join(ROOT, rel));
+  const up = path.relative(ROOT, filePath);
+  if (up.startsWith("..") || path.isAbsolute(up)) {
     res.writeHead(403);
     return res.end("Forbidden");
   }
@@ -253,7 +287,7 @@ server.on("error", async (err) => {
   process.exit(1);
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, "127.0.0.1", () => {
   const addr = `http://localhost:${PORT}`;
   console.log("");
   console.log("  SOUNDBOARD siap dipakai");
