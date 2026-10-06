@@ -1,0 +1,250 @@
+{
+  "master": 0.9,
+  "pads": [
+    {
+      "file": "Kusuma Wijaya.mp3",
+      "name": "Intro ",
+      "key": "3",
+      "loop": false,
+      "volume": 1
+    },
+    {
+      "file": "Ajojing Sound Effect.mp3",
+      "name": "Petruk Gareng masuk",
+      "key": "1",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": "Sepeda Mail Sound Effect.mp3",
+      "name": "ao masuk keluar",
+      "key": "2",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": "FAAAH Sound Effect.mp3",
+      "name": "rondo",
+      "key": "4",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": "Pirates of the Caribbean Sound Effect.mp3",
+      "name": "jon pet otw bpr",
+      "key": "q",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": "Ngopi Maseh Sound Effect.mp3",
+      "name": "jon ngaduk kopi",
+      "key": "w",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": "Tapi Boong Sound Effect.mp3",
+      "name": "pencairan",
+      "key": "e",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "a",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "s",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "d",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "f",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "z",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "x",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "c",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "v",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "5",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "6",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "7",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "8",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "t",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "y",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "u",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "g",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "h",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "j",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "b",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "n",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "m",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "i",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "o",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": "p",
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": null,
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": null,
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": null,
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "key": null,
+      "loop": false,
+      "volume": 0.9
+    }
+  ]
+}

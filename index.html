@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Soundboard — Pentas</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="dot"></span>
+      <h1>SOUNDBOARD</h1>
+      <span class="sub">mode pentas</span>
+      <span class="save-state" id="saveState"></span>
+    </div>
+
+    <div class="top-actions">
+      <button id="openManage" class="ghost big" title="Tambah, ubah, hapus, urutkan pad">⚙ Kelola pad</button>
+
+      <label class="device" id="deviceWrap" hidden>
+        <span>Output</span>
+        <select id="deviceSelect"></select>
+      </label>
+
+      <label class="master">
+        <span>Master</span>
+        <input type="range" id="masterVol" min="0" max="1" step="0.01" value="0.9" />
+        <b id="masterVal">90%</b>
+      </label>
+
+      <button id="panic" class="panic" title="Hentikan semua suara (Esc)">
+        STOP SEMUA
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <div class="grid" id="grid"></div>
+
+    <div class="empty" id="empty" hidden>
+      <div class="empty-box">
+        <p>Belum ada pad.</p>
+        <button id="addPadEmpty" class="ghost big">+ Tambah pad pertama</button>
+        <p class="small">atau seret file audio dari Finder ke sini</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="hint">
+    <span><kbd>Klik</kbd> pad = putar &middot; <b>Seret file dari Finder</b> ke pad = langsung pasang</span>
+    <span><kbd>Esc</kbd> stop semua &middot; klik angka pad untuk ganti hotkey</span>
+  </footer>
+
+  <!-- kelola pad (CRUD) -->
+  <div class="modal" id="manage" hidden>
+    <div class="modal-card wide">
+      <div class="modal-head">
+        <h2>Kelola pad — tambah, ubah, urut, hapus</h2>
+        <div class="modal-head-actions">
+          <button class="ghost" id="addPad">+ Tambah pad</button>
+          <button class="ghost" id="closeManage" title="Tutup (Esc)">✕</button>
+        </div>
+      </div>
+      <div class="mrow mhead">
+        <span>#</span><span>Nama</span><span>Suara</span><span>Hotkey</span><span>Loop</span><span>Vol %</span><span></span>
+      </div>
+      <div class="mlist" id="mlist"></div>
+      <div class="modal-foot">Perubahan langsung tersimpan ke <code>board.json</code>.</div>
+    </div>
+  </div>
+
+  <!-- pemilih file dari folder sounds/ -->
+  <div class="modal" id="picker" hidden>
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2>Pilih suara dari <code>sounds/</code></h2>
+        <div class="modal-head-actions">
+          <button class="ghost" id="reloadFiles" title="Pindai ulang folder sounds/">Muat ulang</button>
+          <button class="ghost" id="closePicker" title="Tutup">✕</button>
+        </div>
+      </div>
+      <input type="search" id="searchFile" placeholder="Cari file…" autocomplete="off" />
+      <div class="filelist" id="filelist"></div>
+      <div class="modal-foot">
+        <b>Cara tercepat:</b> seret file audio dari Finder langsung ke pad — otomatis masuk
+        folder <code>sounds/</code> dan langsung terpasang.<br>
+        File baru di folder <code>sounds/</code> muncul otomatis saat dialog ini dibuka.
+      </div>
+    </div>
+  </div>
+
+  <!-- peringatan bila dibuka tanpa server -->
+  <div class="modal" id="guard" hidden>
+    <div class="modal-card small">
+      <div class="modal-head"><h2>Perlu server lokal</h2></div>
+      <p>Soundboard ini membaca folder <code>sounds/</code> dan <code>board.json</code>,
+         jadi harus dijalankan lewat server lokal (satu perintah):</p>
+      <pre>node serve.js</pre>
+      <p>lalu buka <b>http://localhost:5173</b></p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
