@@ -324,6 +324,14 @@ function renderPad(p) {
   p.el.classList.toggle("playing", p.sources.size > 0);
   p.el.classList.toggle("fading", p.fading);
   p.el.classList.toggle("missing", p.missing);
+  const big = p.el.querySelector(".play-big");
+  const isPlaying = p.sources.size > 0;
+  big.classList.toggle("on", isPlaying);
+  big.innerHTML = p.fading
+    ? "fadeOut…"
+    : isPlaying
+      ? "■ Berhenti"
+      : "▶ Putar";
   updateState(p);
 }
 
@@ -338,19 +346,19 @@ function createPadEl(p) {
     <div class="pad-desc"></div>
     <div class="pad-meta"><span class="state"></span></div>
     <div class="pad-tools">
-      <button class="tool play" title="Putar / berhenti">▶</button>
       <button class="tool loop" title="Loop">🔁</button>
       <button class="tool fade" title="Fade out halus">↘</button>
       <button class="tool load" title="Pilih file dari sounds/">📂</button>
       <button class="tool danger del" title="Kosongkan pad">✕</button>
     </div>
+    <button class="play-big" title="Putar / berhenti (atau klik pad)">▶ Putar</button>
     <div class="pad-vol">
       <input type="range" min="0" max="1" step="0.01" value="0.9" />
       <span>90%</span>
     </div>`;
 
   el.addEventListener("click", (e) => { if (!e.target.closest("button, input")) togglePad(p); });
-  el.querySelector(".play").addEventListener("click", () => togglePad(p));
+  el.querySelector(".play-big").addEventListener("click", () => togglePad(p));
   el.querySelector(".loop").addEventListener("click", () => {
     p.loop = !p.loop;
     p.sources.forEach((s) => (s.loop = p.loop));

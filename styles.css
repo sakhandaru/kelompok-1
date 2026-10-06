@@ -240,6 +240,34 @@ main {
 .tool:disabled { opacity: .3; cursor: not-allowed; }
 .tool:disabled:hover { color: var(--muted); border-color: var(--line); }
 
+/* tombol play besar — terpisah di bawah baris tool */
+.play-big {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 46px;
+  border-radius: 10px;
+  background: #10131a;
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 750;
+  letter-spacing: .4px;
+  cursor: pointer;
+  transition: all .12s ease;
+}
+.play-big:hover { border-color: var(--accent); color: var(--accent); }
+.play-big:active { transform: translateY(1px); }
+.play-big.on {
+  background: rgba(255, 176, 46, 0.16);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: inset 0 0 18px rgba(255, 176, 46, 0.22);
+}
+.play-big:disabled { opacity: .3; cursor: not-allowed; }
+
 .pad.missing { border-color: var(--danger); }
 .pad.missing .state { color: var(--danger); }
 
