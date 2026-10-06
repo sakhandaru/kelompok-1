@@ -4,6 +4,7 @@
     {
       "file": "Kusuma Wijaya.mp3",
       "name": "Intro ",
+      "desc": "cek",
       "key": "3",
       "loop": false,
       "volume": 1
@@ -11,6 +12,7 @@
     {
       "file": "Ajojing Sound Effect.mp3",
       "name": "Petruk Gareng masuk",
+      "desc": "",
       "key": "1",
       "loop": false,
       "volume": 0.9
@@ -18,6 +20,7 @@
     {
       "file": "Sepeda Mail Sound Effect.mp3",
       "name": "ao masuk keluar",
+      "desc": "",
       "key": "2",
       "loop": false,
       "volume": 0.9
@@ -25,6 +28,7 @@
     {
       "file": "FAAAH Sound Effect.mp3",
       "name": "rondo",
+      "desc": "",
       "key": "4",
       "loop": false,
       "volume": 0.9
@@ -32,6 +36,7 @@
     {
       "file": "Pirates of the Caribbean Sound Effect.mp3",
       "name": "jon pet otw bpr",
+      "desc": "",
       "key": "q",
       "loop": false,
       "volume": 0.9
@@ -39,6 +44,7 @@
     {
       "file": "Ngopi Maseh Sound Effect.mp3",
       "name": "jon ngaduk kopi",
+      "desc": "",
       "key": "w",
       "loop": false,
       "volume": 0.9
@@ -46,6 +52,7 @@
     {
       "file": "Tapi Boong Sound Effect.mp3",
       "name": "pencairan",
+      "desc": "",
       "key": "e",
       "loop": false,
       "volume": 0.9
@@ -53,6 +60,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "a",
       "loop": false,
       "volume": 0.9
@@ -60,6 +68,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "s",
       "loop": false,
       "volume": 0.9
@@ -67,6 +76,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "d",
       "loop": false,
       "volume": 0.9
@@ -74,6 +84,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "f",
       "loop": false,
       "volume": 0.9
@@ -81,6 +92,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "z",
       "loop": false,
       "volume": 0.9
@@ -88,6 +100,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "x",
       "loop": false,
       "volume": 0.9
@@ -95,6 +108,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "c",
       "loop": false,
       "volume": 0.9
@@ -102,6 +116,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "v",
       "loop": false,
       "volume": 0.9
@@ -109,6 +124,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "5",
       "loop": false,
       "volume": 0.9
@@ -116,6 +132,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "6",
       "loop": false,
       "volume": 0.9
@@ -123,6 +140,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "7",
       "loop": false,
       "volume": 0.9
@@ -130,6 +148,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "8",
       "loop": false,
       "volume": 0.9
@@ -137,6 +156,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "t",
       "loop": false,
       "volume": 0.9
@@ -144,6 +164,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "y",
       "loop": false,
       "volume": 0.9
@@ -151,6 +172,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "u",
       "loop": false,
       "volume": 0.9
@@ -158,6 +180,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "g",
       "loop": false,
       "volume": 0.9
@@ -165,6 +188,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "h",
       "loop": false,
       "volume": 0.9
@@ -172,6 +196,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "j",
       "loop": false,
       "volume": 0.9
@@ -179,6 +204,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "b",
       "loop": false,
       "volume": 0.9
@@ -186,6 +212,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "n",
       "loop": false,
       "volume": 0.9
@@ -193,6 +220,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "m",
       "loop": false,
       "volume": 0.9
@@ -200,6 +228,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "i",
       "loop": false,
       "volume": 0.9
@@ -207,6 +236,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "o",
       "loop": false,
       "volume": 0.9
@@ -214,6 +244,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": "p",
       "loop": false,
       "volume": 0.9
@@ -221,6 +252,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": null,
       "loop": false,
       "volume": 0.9
@@ -228,6 +260,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": null,
       "loop": false,
       "volume": 0.9
@@ -235,6 +268,7 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": null,
       "loop": false,
       "volume": 0.9
@@ -242,7 +276,16 @@
     {
       "file": null,
       "name": "",
+      "desc": "",
       "key": null,
+      "loop": false,
+      "volume": 0.9
+    },
+    {
+      "file": null,
+      "name": "",
+      "desc": "",
+      "key": "r",
       "loop": false,
       "volume": 0.9
     }
