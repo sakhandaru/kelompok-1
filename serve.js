@@ -121,12 +121,13 @@ function sanitizeBoard(input) {
   if (Array.isArray(input.pads)) {
     input.pads.slice(0, 64).forEach((raw) => {
       if (!raw || typeof raw !== "object") return;
-      const pad = { file: null, name: "", key: null, loop: false, volume: 0.9 };
+      const pad = { file: null, name: "", desc: "", key: null, loop: false, volume: 0.9 };
       if (typeof raw.file === "string") {
         const clean = path.normalize(raw.file).replace(/^([/\\.]+)/, "");
         if (!clean.includes("..") && !path.isAbsolute(clean)) pad.file = clean;
       }
       if (typeof raw.name === "string") pad.name = raw.name.slice(0, 80);
+      if (typeof raw.desc === "string") pad.desc = raw.desc.slice(0, 140);
       if (typeof raw.key === "string") pad.key = raw.key.slice(0, 12);
       pad.loop = !!raw.loop;
       if (typeof raw.volume === "number") pad.volume = Math.min(1, Math.max(0, raw.volume));

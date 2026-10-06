@@ -62,7 +62,7 @@ Buka **⚙ Kelola pad** (di bar atas) — semua bisa diatur tanpa menyentuh JSON
 |---|---|
 | **Create** | tombol **+ Tambah pad** (atau dari layar kosong) |
 | **Read** | daftar semua pad: nama, suara, hotkey, loop, volume |
-| **Update** | edit langsung di kolomnya (nama, hotkey, loop, volume %) |
+| **Update** | edit langsung di kolomnya (nama, keterangan, hotkey, loop, volume %) |
 | **Ganti suara** | klik kolom *Suara* → pilih dari `sounds/`, atau **✕ Kosongkan pad** |
 | **Delete** | tombol **✕** di baris pad (ada konfirmasi) |
 | **Urutkan** | tombol **↑ ↓** — urutan = posisi pad di grid |
@@ -77,8 +77,8 @@ Bisa juga di-edit manual lewat editor teks:
 {
   "master": 0.9,
   "pads": [
-    { "file": "fx/tawa.wav",         "name": "Tawa penonton", "key": "1", "loop": false, "volume": 0.9 },
-    { "file": "musik/backing.mp3",   "name": "Backing",       "key": "q", "loop": true,  "volume": 0.7 },
+    { "file": "fx/tawa.wav", "name": "Tawa penonton", "desc": "tawa crowd, jangan kepanjangan", "key": "1", "loop": false, "volume": 0.9 },
+    { "file": "musik/backing.mp3", "name": "Backing", "desc": "fade out di akhir lagu", "key": "q", "loop": true, "volume": 0.7 },
     { "file": null, "name": "", "key": "w", "loop": false, "volume": 0.9 }
   ]
 }
@@ -89,6 +89,7 @@ Bisa juga di-edit manual lewat editor teks:
 | `master` | volume utama 0–1 |
 | `file` | path relatif dari folder `sounds/` (`null` = pad kosong) |
 | `name` | tampilan di pad (kosongkan = pakai nama file) |
+| `desc` | keterangan singkat di bawah nama (maks 140 karakter, opsional) |
 | `key` | hotkey (`null` = tanpa hotkey) |
 | `loop` | `true` = diulang terus |
 | `volume` | volume pad 0–1 |

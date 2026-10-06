@@ -86,7 +86,7 @@ function saveBoard() {
   saveTimer = setTimeout(async () => {
     const payload = {
       master: parseFloat($("#masterVol").value),
-      pads: pads.map((p) => ({ file: p.file, name: p.name, key: p.key, loop: p.loop, volume: p.volume })),
+      pads: pads.map((p) => ({ file: p.file, name: p.name, desc: p.desc, key: p.key, loop: p.loop, volume: p.volume })),
     };
     try {
       await api("/api/board", {
@@ -263,6 +263,7 @@ function createPad(data = {}) {
   return {
     file: data.file || null,
     name: data.name || "",
+    desc: data.desc || "",
     key: data.key === undefined ? nextFreeKey() : data.key,
     loop: !!data.loop,
     volume: typeof data.volume === "number" ? data.volume : 0.9,
@@ -312,6 +313,9 @@ function renderPad(p) {
   const nameEl = p.el.querySelector(".pad-name");
   nameEl.textContent = p.name || (p.file ? p.file : "tanpa suara");
   nameEl.classList.toggle("empty", !p.name && !p.file);
+  const descEl = p.el.querySelector(".pad-desc");
+  descEl.textContent = p.desc || "";
+  p.el.title = p.desc ? (p.name || p.file || "") + " — " + p.desc : "";
   p.el.querySelector(".loop").classList.toggle("on", p.loop);
   const vol = p.el.querySelector(".pad-vol input");
   vol.value = p.volume;
@@ -331,6 +335,7 @@ function createPadEl(p) {
       <button class="key" title="Klik untuk ganti hotkey"></button>
       <div class="pad-name empty">tanpa suara</div>
     </div>
+    <div class="pad-desc"></div>
     <div class="pad-meta"><span class="state"></span></div>
     <div class="pad-tools">
       <button class="tool play" title="Putar / berhenti">▶</button>
@@ -408,6 +413,7 @@ function renderManage() {
     row.innerHTML = `
       <span class="midx">${i + 1}</span>
       <input class="m-name" placeholder="nama pad" />
+      <input class="m-desc" placeholder="keterangan" title="Deskripsi singkat pad" maxlength="140" />
       <button class="m-file" title="Pilih suara">${p.file ? escapeHtml(p.file) : "— pilih suara —"}</button>
       <input class="m-key" maxlength="6" placeholder="–" title="Hotkey" />
       <input class="m-loop" type="checkbox" title="Loop" />
@@ -419,6 +425,7 @@ function renderManage() {
       </span>`;
 
     row.querySelector(".m-name").value = p.name;
+    row.querySelector(".m-desc").value = p.desc || "";
     row.querySelector(".m-key").value = p.key || "";
     row.querySelector(".m-loop").checked = p.loop;
     row.querySelector(".m-vol").value = Math.round(p.volume * 100);
@@ -426,6 +433,10 @@ function renderManage() {
 
     row.querySelector(".m-name").addEventListener("input", (e) => {
       p.name = e.target.value;
+      renderPad(p); saveBoard();
+    });
+    row.querySelector(".m-desc").addEventListener("input", (e) => {
+      p.desc = e.target.value.slice(0, 140);
       renderPad(p); saveBoard();
     });
     row.querySelector(".m-file").addEventListener("click", () => openPicker(i));
