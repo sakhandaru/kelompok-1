@@ -100,6 +100,35 @@ Urutan array = posisi pad (bebas, 0–64 pad). Simpan file, lalu muat ulang brow
 Copy seluruh folder project (termasuk `sounds/` dan `board.json`) → jalankan
 `node serve.js` → langsung sama persis tampilannya.
 
+## Deploy ke GitHub Pages
+
+Aplikasi punya **mode statis + fallback**: kalau `node serve.js` tidak jalan
+(mis. dibuka dari GitHub Pages), app otomatis baca `board.json` dan
+`sounds.json` langsung sebagai file statis.
+
+```bash
+node serve.js --manifest   # regenerate sounds.json (daftar file audio)
+git add -A && git commit -m "update" && git push
+```
+
+Lalu di GitHub: **Settings → Pages → Branch: `main` / `/ (root)`**.
+Buka `https://sakhandaru.github.io/kelompok-1/`.
+
+| Fitur | Lokal (`node serve.js`) | GitHub Pages (statis) |
+|---|---|---|
+| Putar suara, hotkey, loop, fade, master | ✓ | ✓ |
+| Baca `board.json` + pilih suara | ✓ | ✓ |
+| Simpan perubahan pad | ✓ | ✗ (indikator `mode statis — baca saja`) |
+| Upload / seret file audio | ✓ | ✗ |
+
+Catatan:
+
+- `sounds.json` dibuat otomatis tiap server dinyalakan dan tiap upload;
+  jalankan `node serve.js --manifest` sebelum push kalau menambah file
+  `sounds/` tanpa membuka server.
+- Setiap kali pad disimpan di mode lokal, commit `board.json` supaya
+  versi online ikut terbaru.
+
 ## Kontrol saat pentas
 
 | Aksi | Cara |

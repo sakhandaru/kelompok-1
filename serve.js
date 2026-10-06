@@ -92,6 +92,26 @@ function listSounds(dir = SOUNDS_DIR, prefix = "") {
   return out.sort((a, b) => a.localeCompare(b, "id"));
 }
 
+/* manifest statis sounds.json — dipakai app saat dibuka tanpa server
+   (mis. GitHub Pages): daftar file audio hasil scan terakhir. */
+const MANIFEST_FILE = path.join(ROOT, "sounds.json");
+function writeManifest() {
+  try {
+    fs.writeFileSync(MANIFEST_FILE, JSON.stringify({ files: listSounds() }, null, 2) + "\n");
+  } catch (e) {
+    console.warn("[sounds.json] gagal ditulis:", e.message);
+  }
+}
+
+/* mode cepat: regenerate manifest tanpa buka server
+   (pakai sebelum push ke GitHub Pages) */
+if (process.argv.includes("--manifest")) {
+  writeManifest();
+  console.log("sounds.json diperbarui (" + listSounds().length + " file)");
+  process.exit(0);
+}
+writeManifest(); // manifest selalu sinkron tiap server dinyalakan
+
 /* ---------- validasi board.json yang dikirim browser ---------- */
 function sanitizeBoard(input) {
   const board = { master: 0.9, pads: [] };
@@ -172,6 +192,7 @@ const server = http.createServer((req, res) => {
     ws.on("close", () => {
       const rel = path.relative(SOUNDS_DIR, final).split(path.sep).join("/");
       console.log("[upload] sounds/" + rel);
+      writeManifest(); // daftar file di manifest ikut ter-update
       json(res, 200, { ok: true, path: rel });
     });
     ws.on("error", (e) => json(res, 500, { ok: false, error: e.message }));

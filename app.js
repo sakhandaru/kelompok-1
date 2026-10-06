@@ -56,8 +56,31 @@ async function api(path, opts) {
   return r.json();
 }
 
+/* Mode statis: dibuka tanpa server (GitHub Pages / hosting statis).
+   Semua fitur jalan, tapi perubahan TIDAK bisa disimpan —
+   board.json dan sounds.json dibaca apa adanya dari file yang ter-deploy. */
+let staticMode = false;
+
+async function staticJson(file) {
+  const r = await fetch(file, { cache: "no-cache" });
+  if (!r.ok) throw new Error(file + " -> " + r.status);
+  const ct = r.headers.get("content-type") || "";
+  if (!/json/.test(ct)) throw new Error(file + " tidak valid (" + (ct || "tanpa content-type") + ")");
+  return r.json();
+}
+
+async function loadBoard() {
+  if (staticMode) return staticJson("board.json");
+  return api("/api/board");
+}
+async function loadFiles() {
+  const data = staticMode ? await staticJson("sounds.json") : await api("/api/files");
+  return data.files || [];
+}
+
 let saveTimer = null;
 function saveBoard() {
+  if (staticMode) { setSaveState("mode statis — tidak tersimpan", true); return; }
   clearTimeout(saveTimer);
   setSaveState("menyimpan…");
   saveTimer = setTimeout(async () => {
@@ -80,10 +103,11 @@ function saveBoard() {
   }, 400);
 }
 let saveStateTimer = null;
-function setSaveState(msg) {
+function setSaveState(msg, keep = false) {
   const el = $("#saveState");
   el.textContent = msg;
   clearTimeout(saveStateTimer);
+  if (keep) return; // indikator permanen (mis. mode statis)
   if (msg) saveStateTimer = setTimeout(() => (el.textContent = ""), 4000);
 }
 
@@ -204,6 +228,7 @@ async function assignFile(index, rel) {
 }
 
 async function uploadAndAssign(index, file) {
+  if (staticMode) { toast("Mode statis: upload suara hanya lewat node serve.js"); return; }
   const isAudio = /^audio\//.test(file.type) ||
     /\.(mp3|wav|m4a|aac|ogg|opus|flac|webm|aiff|aif)$/i.test(file.name);
   if (!isAudio) { toast("Itu bukan file audio"); return; }
@@ -501,13 +526,12 @@ function escapeHtml(s) {
 
 async function refreshFiles(showToast = false) {
   try {
-    const data = await api("/api/files");
-    files = data.files || [];
+    files = await loadFiles();
     renderFileList();
     if (showToast) toast(files.length + " file ditemukan");
   } catch (e) {
     console.error(e);
-    toast("Gagal memindai folder sounds/");
+    toast(staticMode ? "sounds.json tidak ditemukan" : "Gagal memindai folder sounds/");
   }
 }
 
@@ -601,12 +625,28 @@ async function init() {
 
   let board;
   try {
-    [board, files] = await Promise.all([api("/api/board"), api("/api/files")]);
+    [board, files] = await Promise.all([loadBoard(), loadFiles()]);
   } catch (e) {
-    console.error(e);
-    $("#guard").hidden = false;
-    $("#guard p").innerHTML = "Server tidak merespons. Jalankan ulang <code>node serve.js</code>.";
-    return;
+    /* server lokal tidak ada — coba mode statis (board.json + sounds.json) */
+    try {
+      staticMode = true;
+      [board, files] = await Promise.all([loadBoard(), loadFiles()]);
+      console.warn("Server lokal tidak ada — mode statis (baca saja).", e);
+    } catch (e2) {
+      console.error(e2);
+      $("#guard").hidden = false;
+      $("#guard p").innerHTML = location.protocol === "file:"
+        ? "Halaman dibuka langsung dari file, jadi browser memblokir akses ke folder <code>sounds/</code>. Jalankan <code>node serve.js</code>."
+        : "Server tidak merespons dan file statis tidak ditemukan. Jalankan <code>node serve.js</code>, atau pastikan <code>board.json</code> &amp; <code>sounds.json</code> ikut ter-deploy.";
+      return;
+    }
+  }
+
+  if (staticMode) {
+    $("#saveState").textContent = "mode statis — baca saja";
+    $("#saveState").title = "Dibuka tanpa server: perubahan tidak bisa disimpan. Jalankan node serve.js untuk mode penuh.";
+    $("#manageFoot").textContent =
+      "Mode statis (GitHub Pages): perubahan hanya berlaku selama tab ini terbuka. Simpan permanen lewat node serve.js.";
   }
 
   $("#masterVol").value = board.master ?? 0.9;
